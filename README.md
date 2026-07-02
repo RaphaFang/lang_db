@@ -4,6 +4,9 @@ A personal vocabulary trainer backed by Postgres. You feed it words; it stores
 definitions, example sentences, and semantic vectors, then schedules reviews
 with spaced repetition and gives you active writing practice.
 
+<br>
+<br>
+
 ## Architecture
 
 One Postgres database (`lang`) and one Python package (`widget_srs/`).
@@ -32,6 +35,9 @@ Two inbox files at the repo root feed the importers: `words.txt` (words you
 want to learn, one per line) and `paste.json` (where you drop a web model's
 reply). Both are gitignored.
 
+<br>
+<br>
+
 ## Usage
 
 ### Setup (once)
@@ -44,6 +50,10 @@ reply). Both are gitignored.
    - `ANTHROPIC_API_KEY` — only for API import (`add_words`)
    - `LANG_LLM_MODEL` — optional, defaults to `claude-haiku-4-5`
 
+
+<br>
+<br>
+
 ### Add words
 
 Put new words in `words.txt`, one per line, then either:
@@ -52,15 +62,19 @@ Put new words in `words.txt`, one per line, then either:
 python3 -m widget_srs.add_words          # via Claude API (automatic)
 ```
 
-or, for $0 using your web subscription: (this is the approach i choose)
+or, for $0 using your web subscription: (`this is the approach i choose`)
 
 ```bash
 python3 -m widget_srs.paste_import --prompt   # prints a prompt to paste into the web model
-#   ... paste the model's JSON reply into paste.json ...
+                                              #   ... paste the model's JSON reply into paste.json ...
 python3 -m widget_srs.paste_import            # imports it
 ```
 
 Either way, words already in `voc_t` are skipped and `words.txt` is cleared on success.
+
+<br>
+<br>
+
 
 ### Review (passive recall)
 
@@ -70,6 +84,9 @@ python3 -m widget_srs.run_review [lang] [limit]
 
 Shows each due word; you rate it 1–4 (Again/Hard/Good/Easy) and FSRS schedules
 the next review.
+
+<br>
+<br>
 
 ### Practice (active production)
 

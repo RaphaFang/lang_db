@@ -208,7 +208,5 @@ __marimo__/
 
 
 *.csv
-# runtime inboxes / trained artifacts (not code)
-words.txt
-paste.json
+# trained artifact (not code)
 widget_srs/weights.json

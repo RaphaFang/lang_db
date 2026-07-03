@@ -31,6 +31,13 @@ One Postgres database (`lang`) and one Python package (`widget_srs/`).
 | `run_review.py`         | the daily review session (passive recall)                   |
 | `practice.py`           | active practice: write sentences/paragraphs from a word set |
 
+**Semantic model.** Words are embedded with `multilingual-e5-small` (384-dim,
+multilingual) — this model _is_ the coordinate system: a word's vector depends
+only on the word + the model, so it's computed once and frozen. Cross-lingual
+comes free (`cat` ≈ `gato` ≈ `猫`). Similar words aren't stored; `embed.similar()`
+queries the whole table live by cosine distance (`<=>`). Swapping `MODEL` means a
+new coordinate system — clear `embedding` and re-run `backfill()`.
+
 Two inbox files at the repo root feed the importers: `words.txt` (words you
 want to learn, one per line) and `paste.json` (where you drop a web model's
 reply). Both are gitignored.
@@ -49,7 +56,6 @@ reply). Both are gitignored.
    - `PSQL_USER`, `DB_PASSWORD` — database login (always)
    - `ANTHROPIC_API_KEY` — only for API import (`add_words`)
    - `LANG_LLM_MODEL` — optional, defaults to `claude-haiku-4-5`
-
 
 <br>
 <br>
@@ -74,7 +80,6 @@ Either way, words already in `voc_t` are skipped and `words.txt` is cleared on s
 
 <br>
 <br>
-
 
 ### Review (passive recall)
 
